@@ -2,6 +2,7 @@ nota1 = float(input("Digite primeira nota: "))
 nota2 = float(input("Digite segunda nota: "))
 nota3 = float(input("Digite terceira nota: "))
 media = (nota1+nota2+nota3)/3
+print (media)
 #if nota1+nota2+nota3 > 6:
 if media >= 6:
     print ("Você está aprovado")
@@ -9,7 +10,6 @@ if media == 4 or 5:
     print ("Voce está de recuperaçâo")
 if media < 4:
     print ("Voce está reprovado")
-    
 #else:     
 #    print ("Você está reprovado!")        
 
