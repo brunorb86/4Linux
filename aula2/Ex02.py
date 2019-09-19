@@ -31,7 +31,8 @@ n1 = float(input("Digite o numero 1: "))
 n2 = float(input("Digite o numero 2: "))
 calc = int(input("Digite 1 para soma, 2 para sub, 3 para div, 4 para mult ou 5 para sair: "))
 if calc == 1:
-    print ("O resultado da soma {} + {} = {}".format(n1,n2,n1+n2))
+print ("O resultado da soma {} + {} = {}".format(n1,n2,n1+n2))
+#print ("O resultado da soma {0:.2f} + {1:.2f} = {2:.2f}".format(n1,n2,n1+n2)) #Jeito correto de relacionarclear
 elif calc == 2:
     print ("O resultado da sub {} - {} = {}".format(n1,n2,n1-n2))
 elif calc == 3:
