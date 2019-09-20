@@ -1,18 +1,27 @@
-dic = {1:8.50, 2:3.25, 2:4.60}
-
+dic = {1:8.50, 2:3.25, 3:4.60}
+total=0
 lista = []
 
-print ("Escolha o seu produto: ")
-print (" 1 - Banana\n 2 - Pera\n 3- Melancia")
 
-lista.append(1)
-lista.append(2)
-lista.append(3)
+while True:
+
+    print ("Escolha o seu produto: ")
+    print (" 1 - Banana\n 2 - Pera\n 3- Melancia")
+    opcao=int(input("Digite o produto: "))
+
+    if opcao >= 4:
+        print("Volte sempre")
+        break
+    else:    
+        lista.append(opcao)
+        print(lista)
+    
 
 for elemento in lista:
-    total =+ dic[elemento]
+#total += dic[opcao]
+    total +=  dic[elemento]
 
-print (dic[1])
+print(total)
 
 exit()
 #!/usr/bin/python3
