@@ -1,15 +1,44 @@
+with open("arquivo.txt", "r") as xx:
+    conteudo = xx.read() + "\n"
+
+dic = {"ID":"", "NOME":"", "IDADE":"", "SEXO":"", "PAIS":""}
+
+#print(conteudo)
+
+dic["ID"] = input("Digite o seu ID: ")
+dic["NOME"] = input("Digite o seu nome: ")
+dic["IDADE"] = input("Digite a sua idade: ")
+dic["SEXO"] = input("INFOME SEXO (M/F): ")
+dic["PAIS"] = input("INFORME PAIS ORIGEM:")
+
+for dados in dic.values():
+    conteudo += dados + ";"
+
+print(conteudo)
+print(dic)
+
+for lista in dic:
+    conteudo += ";" (conteudo) 
+    
+
+
+exit()
 # Passo 1 - Abrir o arquivo
 
-with open("arquivo.txt") as cadastro: 
+with open("arquivo.txt", "r") as cadastro: 
     conteudo = cadastro.readlines()
 #    texto = cadastro.read()
 
 print(conteudo)
 # Passo 2 - Consultar pelo ID
 
-id = input ("Digite o ID para busca: ")
+#id = input ("Digite o ID para busca: ")
+
+dic = {"ID":'', "NOME":'', "IDADE":'', "SEXO":'', "PAIS":''}
 
 # Passo 3 - Busca
+
+exit ()
 
 for linha in conteudo:
     if id in linha:

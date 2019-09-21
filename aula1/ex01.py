@@ -1,3 +1,10 @@
+x = 10
+while x < 10:
+    print ("Numero: {} rodando".format(x))
+    x =+1
+print("O while acabou!!")
+
+exit()
 nota1 = float(input("Digite primeira nota: "))
 nota2 = float(input("Digite segunda nota: "))
 nota3 = float(input("Digite terceira nota: "))
