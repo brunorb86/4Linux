@@ -1,6 +1,5 @@
 #Classes
 class Busao:
-    
     def __init__(self):
         self.ano = ""
         self.linha = ""
@@ -22,15 +21,11 @@ def main():
     onibus.ano = "2010"
     onibus.linha = "Barra Funda"
     onibus.lugares = "45"
-
-    onibus.pegar()
-    onibus.pegar()
-    onibus.pegar()
-    onibus.pegar()
     print(onibus.pegar_passageiros)
-    onibus.despachar()
-    print(onibus.deixar_passageiros)
-    x = self.pegar_passageiros - self.deixar_passageiros
-        print(x)
+    onibus.pegar()
+#   print(onibus.deixar_passageiros)
+#   onibus.despachar()
+# = self.pegar_passageiros - self.deixar_passageiros
+#   print(x)
 if __name__ == "__main__":
     main()
