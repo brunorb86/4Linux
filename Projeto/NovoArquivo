@@ -1,0 +1,13 @@
+-- Select
+use projetofuncionarios;
+
+#SELECT * FROM pessoa;
+
+#SELECT * FROM pessoa
+#WHERE nac_pessoa = 'Brasileira';
+
+#SELECT * FROM pessoa
+#WHERE idade_pessoa > 40;
+
+SELECT * FROM funcionarios_dados;
+#WHERE nome_pessoa like 'Bru%';
