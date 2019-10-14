@@ -1,0 +1,203 @@
+https://djangostars.com/blog/what-is-docker-and-how-to-use-it-with-python/
+
+developer@developer:~/Documentos/Aulas/api$ python3 -m virtualenv --python=$(which python3) env
+Already using interpreter /usr/bin/python3
+Using base prefix '/usr'
+New python executable in /home/developer/Documentos/Aulas/api/env/bin/python3
+Not overwriting existing python script /home/developer/Documentos/Aulas/api/env/bin/python (you must use /home/developer/Documentos/Aulas/api/env/bin/python3)
+Installing setuptools, pkg_resources, pip, wheel...done.
+developer@developer:~/Documentos/Aulas/api$ source env/bin/activate
+(env) developer@developer:~/Documentos/Aulas/api$ 
+
+(env) developer@developer:~/Documentos/4Linux/Aulas/api/dashboard$ touch app.py
+(env) developer@developer:~/Documentos/4Linux/Aulas/api/dashboard$ touch .gitignore
+(env) developer@developer:~/Documentos/4Linux/Aulas/api/dashboard$ touch README.md
+(env) developer@developer:~/Documentos/4Linux/Aulas/api/dashboard$ mkdir templates
+(env) developer@developer:~/Documentos/4Linux/Aulas/api/dashboard$ mkdir routes
+(env) developer@developer:~/Documentos/4Linux/Aulas/api/dashboard$ touch .env
+(env) developer@developer:~/Documentos/4Linux/Aulas/api/dashboard$ git init
+Initialized empty Git repository in /home/developer/Documentos/4Linux/Aulas/api/dashboard/.git/
+(env) developer@developer:~/Documentos/4Linux/Aulas/api/dashboard$ 
+
+use pussy #use dbname
+> db.users.insert({ name: 'Bruno Ramos Bonfim' })
+WriteResult({ "nInserted" : 1 })
+> db.users.insert({ niveldafome: 'alto' })
+WriteResult({ "nInserted" : 1 })
+> db.users.find()
+{ "_id" : ObjectId("5d93e5d7723cf2ea6c43ad7b"), "name" : "Bruno Ramos Bonfim" }
+{ "_id" : ObjectId("5d93e622723cf2ea6c43ad7c"), "niveldafome" : "alto" }
+> db.users.find({ name: 'Bruno Ramos Bonfim'})
+{ "_id" : ObjectId("5d93e5d7723cf2ea6c43ad7b"), "name" : "Bruno Ramos Bonfim" }
+> db.users.find({ _id: ObjectId('5d93e5d7723cf2ea6c43ad7b') })
+{ "_id" : ObjectId("5d93e5d7723cf2ea6c43ad7b"), "name" : "Bruno Ramos Bonfim" }
+> 
+
+######################## Docker ########################
+
+developer@developer:~$ docker container ls
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+8f80a535e946        ubuntu              "bash"              11 minutes ago      Up 11 minutes                           vigilant_dubinsky
+developer@developer:~$ docker container ls -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                      PORTS               NAMES
+8f80a535e946        ubuntu              "bash"              12 minutes ago      Up 11 minutes                                   vigilant_dubinsky
+876cf571446c        hello-world         "/hello"            13 minutes ago      Exited (0) 13 minutes ago                       angry_aryabhata
+developer@developer:~$ 
+
+# Parar container
+developer@developer:~$ docker container stop ID_do_docker
+
+# Deletar tudo
+developer@developer:~$ docker image prune
+
+developer@developer:~/Documentos/4Linux/Aulas/api/dashboard/docker$ docker build -t image_name .
+
+
+developer@developer:~/Documentos/4Linux/Aulas/api/dashboard/docker$ docker image ls
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+apache              latest              447b1bbbb0ce        36 seconds ago      188MB
+ubuntu              latest              2ca708c1c9cc        2 weeks ago         64.2MB
+hello-world         latest              fce289e99eb9        9 months ago        1.84kB
+developer@developer:~/Documentos/4Linux/Aulas/api/dashboard/docker$ docker run apache
+developer@developer:~/Documentos/4Linux/Aulas/api/dashboard/docker$ docker image ls
+REPOSITORY          TAG                 IMAGE ID            CREATED              SIZE
+apache              latest              447b1bbbb0ce        About a minute ago   188MB
+ubuntu              latest              2ca708c1c9cc        2 weeks ago          64.2MB
+hello-world         latest              fce289e99eb9        9 months ago         1.84kB
+
+developer@developer:~/Documentos/4Linux/Aulas/api/dashboard/docker$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED              STATUS                          PORTS               NAMES
+bb2d16b094c8        apache              "/bin/bash"         About a minute ago   Exited (0) About a minute ago                       xenodochial_mcclintock
+8f80a535e946        ubuntu              "bash"              24 minutes ago       Up 24 minutes                                       vigilant_dubinsky
+876cf571446c        hello-world         "/hello"            26 minutes ago       Exited (0) 26 minutes ago                           angry_aryabhata
+developer@developer:~/Documentos/4Linux/Aulas/api/dashboard/docker$ 
+
+developer@developer:~/Documentos/4Linux/Aulas/api/dashboard/docker$ docker run -it apache bash
+root@b64dd55739f7:/# 
+
+
+developer@developer:~/Documentos/4Linux/Aulas/api/dashboard/docker$ docker run -it -p 80:80 apache bash
+docker: Error response from daemon: driver failed programming external connectivity on endpoint wizardly_dewdney (9a8d24e3d8df31d9641ace9e0d69204ba14fe2efa1e569af1a35ffbd5693b816): Error starting userland proxy: listen tcp 0.0.0.0:80: listen: address already in use.
+developer@developer:~/Documentos/4Linux/Aulas/api/dashboard/docker$ sudo netstats -nltp | grep 80
+sudo: netstats: comando não encontrado
+developer@developer:~/Documentos/4Linux/Aulas/api/dashboard/docker$ sudo netstat -nltp | grep 80
+tcp6       0      0 :::8080                 :::*                    OUÇA       1578/java           
+tcp6       0      0 :::80                   :::*                    OUÇA       739/apache2         
+developer@developer:~/Documentos/4Linux/Aulas/api/dashboard/docker$ sudo service apache2 stop
+developer@developer:~/Documentos/4Linux/Aulas/api/dashboard/docker$ ls
+Dockerfile
+developer@developer:~/Documentos/4Linux/Aulas/api/dashboard/docker$ sudo netstat -nltp | grep 80
+tcp6       0      0 :::8080                 :::*                    OUÇA       1578/java           
+developer@developer:~/Documentos/4Linux/Aulas/api/dashboard/docker$ docker run -it -p 80:80 apache bash
+root@fc546bd71fb3:/# service apache2 status
+ * apache2 is not running
+root@fc546bd71fb3:/# service apache2 start 
+ * Starting Apache httpd web server apache2                                                                                                          AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.17.0.3. Set the 'ServerName' directive globally to suppress this message
+ * 
+root@fc546bd71fb3:/# 
+
+developer@developer:~/Documentos/4Linux/Aulas/api/dashboard/docker$ docker run -dit -p 80:80 apache bash
+
+docker exet -it ID
+
+----------------------- Python Docker ---------------------------
+
+>>> for c in conn.containers.list(all=True):
+...     c.image.tags
+... 
+['dashboard_application:latest']
+['gitlab/gitlab-ce:latest']
+['jenkins/jenkins:latest']
+['flask-app:latest']
+[]
+[]
+[]
+[]
+[]
+[]
+[]
+[]
+['apache:latest']
+['apache:latest']
+[]
+[]
+[]
+[]
+[]
+[]
+[]
+[]
+[]
+[]
+[]
+[]
+[]
+[]
+['ubuntu:latest']
+['hello-world:latest']
+>>> c = conn.containers.list(all=True)[0]
+>>> dir(c)
+['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', 'attach', 'attach_socket', 'attrs', 'client', 'collection', 'commit', 'diff', 'exec_run', 'export', 'get_archive', 'id', 'id_attribute', 'image', 'kill', 'labels', 'logs', 'name', 'pause', 'ports', 'put_archive', 'reload', 'remove', 'rename', 'resize', 'restart', 'short_id', 'start', 'stats', 'status', 'stop', 'top', 'unpause', 'update', 'wait']
+>>> 
+
+
+##################### Parar todas os containers via python
+
+>>> containers = conn.containers.list(all=True)
+>>> containers = [ c for c in containers if c.status == 'running' ]
+>>> for c in containers:
+...     c.stop()
+... 
+>>>
+
+##################### Dar fim nas instancias
+
+>>> import docker
+>>> conn = docker.DockerClient('tcp://127.0.0.1:2376')
+>>> containers = conn.containers.list(all=True)
+>>> for c in containers:
+...     c.stop()
+...     c.remove()
+... 
+>>> conn.containers.list(all=True)
+[]
+>>> 
+
+##################### Jenkins
+
+>>> import jenkins
+>>> conn = jenkins.Jenkins('http://localhost:8080/', username='admin', password='4linux')
+>>> conn.get_whoami()
+{'fullName': 'Admin 4linux', 'absoluteUrl': 'http://localhost:8080/user/admin', 'description': None, 'property': [{'_class': 'jenkins.security.ApiTokenProperty'}, {'_class': 'com.cloudbees.plugins.credentials.UserCredentialsProvider$UserCredentialsProperty'}, {'triggers': [], '_class': 'hudson.plugins.emailext.watching.EmailExtWatchAction$UserProperty'}, {'_class': 'hudson.model.MyViewsProperty'}, {'_class': 'org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty'}, {'_class': 'hudson.model.PaneStatusProperties'}, {'_class': 'jenkins.security.seed.UserSeedProperty'}, {'insensitiveSearch': True, '_class': 'hudson.search.UserSearchProperty'}, {'_class': 'hudson.security.HudsonPrivateSecurityRealm$Details'}, {'address': 'admin@4linux.com', '_class': 'hudson.tasks.Mailer$UserProperty'}], 'id': 'admin', '_class': 'hudson.model.User'}
+>>> conn.get_version()
+'2.198'
+>>> 
+
+###################### GIT LAB request manual
+
+>>> import requests
+>>> headers = {
+...     'PRIVATE-TOKEN': 'c-_9zFcxMsG52keZj7Js'
+... }
+>>> url = 'http://localhost:8000/api/v4/projects'
+>>> res = requests.get(url, headers=headers)
+>>> res.status.code
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+AttributeError: 'Response' object has no attribute 'status'
+>>> res.status_code
+200
+>>> res.json()
+[{'wiki_access_level': 'enabled', 'path': 'python-521', '_links': {'merge_requests': 'http://b2b375de40ba/api/v4/projects/1/merge_requests', 'repo_branches': 'http://b2b375de40ba/api/v4/projects/1/repository/branches', 'issues': 'http://b2b375de40ba/api/v4/projects/1/issues', 'self': 'http://b2b375de40ba/api/v4/projects/1', 'events': 'http://b2b375de40ba/api/v4/projects/1/events', 'members': 'http://b2b375de40ba/api/v4/projects/1/members', 'labels': 'http://b2b375de40ba/api/v4/projects/1/labels'}, 'auto_devops_enabled': True, 'import_status': 'none', 'auto_cancel_pending_pipelines': 'enabled', 'created_at': '2019-10-08T23:31:12.329Z', 'resolve_outdated_diff_discussions': False, 'archived': False, 'printing_merge_request_link_enabled': True, 'build_coverage_regex': None, 'tag_list': [], 'ci_config_path': None, 'builds_access_level': 'enabled', 'build_timeout': 3600, 'id': 1, 'forks_count': 0, 'permissions': {'project_access': {'notification_level': 3, 'access_level': 40}, 'group_access': None}, 'only_allow_merge_if_all_discussions_are_resolved': False, 'container_registry_enabled': True, 'owner': {'state': 'active', 'id': 1, 'web_url': 'http://b2b375de40ba/root', 'username': 'root', 'name': 'Administrator', 'avatar_url': 'https://www.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=80&d=identicon'}, 'merge_method': 'merge', 'name': 'python-521', 'auto_devops_deploy_strategy': 'continuous', 'snippets_enabled': True, 'merge_requests_access_level': 'enabled', 'last_activity_at': '2019-10-08T23:31:12.329Z', 'namespace': {'path': 'root', 'full_path': 'root', 'id': 1, 'web_url': 'http://b2b375de40ba/root', 'kind': 'user', 'name': 'Administrator', 'parent_id': None, 'avatar_url': 'https://www.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=80&d=identicon'}, 'merge_requests_enabled': True, 'http_url_to_repo': 'http://b2b375de40ba/root/python-521.git', 'lfs_enabled': True, 'jobs_enabled': True, 'open_issues_count': 0, 'default_branch': 'master', 'star_count': 0, 'request_access_enabled': False, 'shared_with_groups': [], 'issues_enabled': True, 'wiki_enabled': True, 'visibility': 'private', 'repository_access_level': 'enabled', 'readme_url': 'http://b2b375de40ba/root/python-521/blob/master/README.md', 'ssh_url_to_repo': 'git@b2b375de40ba:root/python-521.git', 'avatar_url': None, 'snippets_access_level': 'enabled', 'empty_repo': False, 'creator_id': 1, 'web_url': 'http://b2b375de40ba/root/python-521', 'only_allow_merge_if_pipeline_succeeds': False, 'ci_default_git_depth': 50, 'name_with_namespace': 'Administrator / python-521', 'path_with_namespace': 'root/python-521', 'public_jobs': True, 'shared_runners_enabled': True, 'description': '', 'issues_access_level': 'enabled'}]
+
+###################### LDAP 
+
+>>> import ldap3
+>>> username = 'admin'
+>>> password = '4linux'
+>>> server = ldap3.Server('ldap://localhost:389')
+>>> conn = ldap3.Connection(server, 'cn=admin,dc=dexter,dc=com,dc=br','4linux')
+>>> conn.bind()
+True
+>>> 
+
